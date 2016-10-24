@@ -9,7 +9,7 @@ from socket import *
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
 #prepare a server socket
-serverSocket.bind(('localhost', 8080))
+serverSocket.bind(('', 8080))
 serverSocket.listen(1)
 
 while True:
@@ -36,6 +36,7 @@ while True:
         print e
         #Send response message for file not found
         connectionSocket.send('HTTP/1.1 404 Not Found\r\n\r\n')
+	connectionSocket.send('404 File Not Found')
         #Close Client socket
         connectionSocket.close()
 
