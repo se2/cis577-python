@@ -36,7 +36,7 @@ while True:
         print e
         #Send response message for file not found
         connectionSocket.send('HTTP/1.1 404 Not Found\r\n\r\n')
-	connectionSocket.send('404 File Not Found')
+        connectionSocket.send('404 File Not Found')
         #Close Client socket
         connectionSocket.close()
 
