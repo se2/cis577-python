@@ -24,15 +24,26 @@ class UserThread(threading.Thread):
                     break
                 filename = message.split()[1]
                 f = open(filename[1:])
-                outputdata = f.read()
+                file_data = f.read()
 
-                connectionSocket.send("HTTP/1.1 200 OK\r\n\r\n")
+                header_data = {
+                    "Content-Length": len(file_data),
+                    "Keep-Alive": "timeout=%d,max=%d" %(10, 100),
+                    "Connection": "Keep-Alive",
+                    "Content-Type": "text/html"
+                }
+                sub_headers = "\r\n".join("%s:%s" % (item, header_data[item]) for item in header_data)
+
+                response_code = "HTTP/1.1 200 OK"
+                connectionSocket.send("%s\r\n%s\r\n\r\n" %(response_code, sub_headers))
+
                 #Send the content of the requested file to the client
-                for i in range(0, len(outputdata)):
-                    connectionSocket.send(outputdata[i])
+                for i in range(0, len(file_data)):
+                    connectionSocket.send(file_data[i])
             except (IOError, IndexError):
+                response_code = "HTTP/1.1 404 Not Found"
                 #Send response message for file not found
-                connectionSocket.send("HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\n\r\n<!doctype html><html><body><p>404 Not Found<p></body></html>")
+                connectionSocket.send("%s\r\n\r\n<!doctype html><html><body><p>404 Not Found<p></body></html>" %(response_code))
 
 serverSocket = socket(AF_INET, SOCK_STREAM) #Prepare a sever socket
 serverPort = 8080
