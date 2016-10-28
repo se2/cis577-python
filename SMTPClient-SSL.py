@@ -24,8 +24,8 @@ msgRoot.attach(msgImage)
 
 recipient = "<dluong1@umassd.edu>"
 sender = "<luongduc.tu1992@gmail.com>"
-username = "luongduc.tu1992"
-password = 'Chaud0ankhanhdung'
+username = ''
+password = ''
 
 # Choose a mail server (e.g. Google mail server) and call it mailserver
 mailserver = "smtp.gmail.com"

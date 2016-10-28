@@ -35,7 +35,6 @@ try:
 	http_header = "\r\n".join("%s:%s" %(item,header[item]) for item in header)
 
 	# print http_header
-
 	client_socket.send("%s\r\n\r\n" %(http_header))
 
 except IOError:
